@@ -1,11 +1,14 @@
-import React from "react";
-import { Collapse, Table } from "antd";
+import React, { useState } from "react";
+import { Button, Collapse, Modal, Table } from "antd";
 import { ParsedGroupType } from "./types";
 import ReactHtmlParser from 'react-html-parser';
 
 import './style/PostsTable.less';
 import CollapsePanel from "antd/lib/collapse/CollapsePanel";
 import { Breakpoint } from "antd/lib/_util/responsiveObserve";
+import useBreakpoint from "use-breakpoint";
+import { BREAKPOINTS } from "../../../constants";
+import { FileTextOutlined } from "@ant-design/icons";
 
 const breakpoint: Breakpoint = 'lg';
 
@@ -28,19 +31,38 @@ const DisplayDate = (date: any) => {
 const hrefToPost = (href: string) => <a href={href} target="_blank" rel="noreferrer">Ссылка</a>;
 
 const textOfPost = (text: string) => {
-
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const { breakpoint } = useBreakpoint(BREAKPOINTS, 'desktop');
   const textFromHTML = ReactHtmlParser(text.replaceAll('a href="/', 'a target="_blank" rel="noreferrer" href="https://vk.com/').replaceAll('src="/', 'src="https://vk.com/'));
-  return <div className="textCeil">
-    {
-      textFromHTML.toString().length > 80
-        ? <Collapse>
-          <CollapsePanel header={`${textFromHTML.toString().slice(0, 80)}`} key="1">
-            <p>{textFromHTML}</p>
-          </CollapsePanel>
-        </Collapse>
-        : textFromHTML
-    }
-  </div>
+  if (breakpoint === 'desktop' || breakpoint === 'tablet') {
+    return <div className="textCeil">
+      {
+        textFromHTML.toString().length > 80
+          ? <Collapse>
+            <CollapsePanel header={`${textFromHTML.toString().slice(0, 80)}`} key="1">
+              <p>{textFromHTML}</p>
+            </CollapsePanel>
+          </Collapse>
+          : textFromHTML
+      }
+    </div>
+  } else {
+    return <>
+      <Button onClick={() => setIsModalVisible(!isModalVisible)}>
+        <FileTextOutlined />
+        Показать
+      </Button>
+      <Modal
+        title={false}
+        visible={isModalVisible}
+        onOk={() => setIsModalVisible(!isModalVisible)}
+        onCancel={() => setIsModalVisible(!isModalVisible)}
+      >
+        {textFromHTML}
+      </Modal>
+    </>
+  }
+
 };
 
 
