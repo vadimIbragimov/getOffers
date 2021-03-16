@@ -7,6 +7,7 @@ import { PostsTable } from "./PostsTable";
 import { ClassificatorType, ParsedGroupType } from "./types";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import useBreakpoint from 'use-breakpoint';
+import { BrandTooltip } from './BrandTooltip';
 
 
 import './style/index.less';
@@ -43,14 +44,14 @@ const Homepage = () => {
 			});
 	};
 
-	const [visible, setVisible] = useState<boolean>(true);
+	const [visible, setVisible] = useState<boolean>(false);
 
 	return (
-		<div>
+		<div className="container">
 			{console.log('breakpoints', breakpoint)}
 			<Layout className="layout">
 				{
-					breakpoint === 'desktop' || breakpoint === 'tablet'
+					breakpoint !== 'mobile'
 						? <Sider theme="light">
 							<Classificator className="classificator_desctop" onChange={(classificator) => setClassificator(classificator)} />
 						</Sider>
@@ -71,6 +72,11 @@ const Homepage = () => {
 							>
 								<Classificator onChange={(classificator) => setClassificator(classificator)} />
 							</Drawer>
+							{
+								breakpoint === 'mobile' && classificator.length === 0
+									? <BrandTooltip />
+									: null
+							}
 						</>
 				}
 

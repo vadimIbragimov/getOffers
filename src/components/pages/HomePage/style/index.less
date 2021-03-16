@@ -1,20 +1,13 @@
 #app {
-  // .content {
-  //   margin-left  : 20px;
-  //   margin-right : 10px;
-  //   padding-right: 10px;
-  // }
-
-  // .load_data_button {
-  //   margin: 30px 100px;
-  // }
-
   .content {
-    padding-left: 20px;
+    padding-left: 28px;
     padding-top : 20px;
     background: none;
+    // margin-left: 90px;
   }
-
+  .container{
+    margin: 0 10px;
+  }
   .layout {
     background: none;
   }
@@ -23,7 +16,7 @@
     padding   : 5px;
     position  : fixed;
     overflow-y: auto;
-    height    : calc(100vh - 80px);
+    height    : calc(100vh - 64px);
   }
 
   .open_drower_button {
@@ -81,7 +74,7 @@
 // }
 
 .ant-col {
-  margin-right: 40px;
+  margin-right: 150px;
 }
 
 .ant-checkbox-group-item {
@@ -89,6 +82,31 @@
 }
 
 .btn {
-  padding-left: 7px;
+  padding-left: 20px;
   padding-top : 20px;
+}
+
+@media (max-width: 975px) {
+  #app {
+    .ant-col {
+      margin-right: 50px;
+    }
+
+}
+  
+}
+@media (max-width: 768px) {
+  #app {
+    .ant-col {
+      margin-right: 50px;
+    }
+    .content {
+      margin-left: 0px;
+      padding-left: 0;
+    }
+    .btn {
+      padding-left: 0px;
+  }
+}
+  
 }

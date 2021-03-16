@@ -10,7 +10,7 @@ import useBreakpoint from "use-breakpoint";
 import { BREAKPOINTS } from "../../../constants";
 import { FileTextOutlined } from "@ant-design/icons";
 
-const breakpoint: Breakpoint = 'lg';
+const breakpointAntd: Breakpoint = 'lg';
 
 type DataType = {
   key: string;
@@ -34,7 +34,7 @@ const textOfPost = (text: string) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const { breakpoint } = useBreakpoint(BREAKPOINTS, 'desktop');
   const textFromHTML = ReactHtmlParser(text.replaceAll('a href="/', 'a target="_blank" rel="noreferrer" href="https://vk.com/').replaceAll('src="/', 'src="https://vk.com/'));
-  if (breakpoint === 'desktop' || breakpoint === 'tablet') {
+  if (breakpoint !== 'mobile') {
     return <div className="textCeil">
       {
         textFromHTML.toString().length > 80
@@ -86,7 +86,6 @@ const columns = [
     title: 'Текст поста',
     dataIndex: 'text',
     key: 'text',
-    // responsive: [breakpoint],
     render: textOfPost,
   },
   {
@@ -117,6 +116,7 @@ const columns = [
       // a должно быть равным b
       return 0;
     },
+    responsive: [breakpointAntd],
   },
 
 ];
