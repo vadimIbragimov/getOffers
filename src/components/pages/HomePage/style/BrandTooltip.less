@@ -4,15 +4,49 @@
   align-items: flex-end;
   position: fixed;
   z-index: 3;
-  background: #333;
-  border-radius: 10px;
+  background: #000;
+  border-right: 1px;
+  border-left: 1px;
   color: #FFF;
   padding: 10px;
+  width: 215px;
+  opacity: 0.86;
+  top: 70px;
+  left: -8px;
+  animation-name: anim; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 2s; /* don't forget to set a duration! */
 
   .brand-tooltip-icon {
     zoom: 300%;
     rotate: 180deg;
   }
 
-  .brand-tooltip-text{}
+  .brand-tooltip-text{
+    margin-left: 20px;
+  }
+
+  .lnr{
+    position: relative;
+    left: 12px;
+    top: -11px;
+    font-size: 27px;
+  }
+}
+
+.animate__animated.animate__bounceInLeft{
+  display: inline-block;
+  margin: 0 0.5rem;
+
+  animation: bounce; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 2s; /* don't forget to set a duration! */
+}
+
+@keyframes anim{
+  0%{
+    transform: translateX(-1000px);
+  }
+  100%{
+    transform: translateX(-0px);
+
+  }
 }
