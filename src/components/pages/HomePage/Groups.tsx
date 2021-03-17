@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox, CheckboxOptionType, Col, Row, Tree } from 'antd';
+import { Checkbox, CheckboxOptionType, Col, message, Row, Tree } from 'antd';
 import './style/Groups.less';
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import { serverAddress } from "../../../constants";
@@ -12,7 +12,7 @@ export const Groups = ({ onChange }: { onChange?: (groups: string[]) => void }) 
 
   useEffect(() => {
     onChange?.([...checkedGroups1.map(v => v.toString()), ...checkedGroups2.map(v => v.toString())])
-  }, [checkedGroups1, checkedGroups2  ]);
+  }, [checkedGroups1, checkedGroups2]);
 
   useEffect(() => {
     fetch(`${serverAddress}api/groups`)
@@ -25,7 +25,11 @@ export const Groups = ({ onChange }: { onChange?: (groups: string[]) => void }) 
             value: sourceGroup.name,
           }))
         )
-      });
+      })
+      .catch((e) => message.error({
+        content: `Ошибка ${e.message}`,
+        duration: 5
+      }))
   }, []);
 
 

@@ -1,18 +1,18 @@
 import Layout, { Content } from "antd/lib/layout/layout";
-import Sider from "antd/lib/layout/Sider";
 import React, { useState } from "react";
-import { Classificator } from "./Classificator";
+import { Button, Drawer, message } from "antd";
+import Sider from "antd/lib/layout/Sider";
+import useBreakpoint from 'use-breakpoint';
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+
+
 import { Groups } from "./Groups";
 import { PostsTable } from "./PostsTable";
-import { ClassificatorType, ParsedGroupType } from "./types";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import useBreakpoint from 'use-breakpoint';
 import { BrandTooltip } from './BrandTooltip';
-
-
-import './style/index.less';
+import { Classificator } from "./Classificator";
+import { ClassificatorType, ParsedGroupType } from "./types";
 import { BREAKPOINTS, serverAddress } from "../../../constants";
-import { Button, Drawer } from "antd";
+import './style/index.less';
 
 const Homepage = () => {
 
@@ -22,6 +22,8 @@ const Homepage = () => {
 	const [classificator, setClassificator] = useState<ClassificatorType>([]);
 	const [groups, setGroups] = useState<string[]>([]);
 	const [postsData, setPostsData] = useState<ParsedGroupType[]>([]);
+
+	const [visible, setVisible] = useState<boolean>(false);
 
 	const onLoadDataClick = () => {
 		setLoading(true)
@@ -39,12 +41,17 @@ const Homepage = () => {
 			.then((data) => {
 				setLoading(false);
 				const resData: ParsedGroupType[] = data;
-				setPostsData(resData);
-				console.log(resData);
-			});
+				if(resData.length)				setPostsData(resData);
+				else message.warn({
+					content: 'По вашему запросу ничего не найдено',
+					duration: 5
+				})
+			})
+			.catch((e) => message.error({
+        content: `Ошибка ${e.message}`,
+        duration: 5
+      }))
 	};
-
-	const [visible, setVisible] = useState<boolean>(false);
 
 	return (
 		<div className="container">

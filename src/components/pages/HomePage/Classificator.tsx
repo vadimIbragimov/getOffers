@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { Tree } from 'antd';
+import { message, Tree } from 'antd';
 import { ClassificatorType } from "./types";
 import { DataNode } from "rc-tree/lib/interface";
 import { parsePath, PathItemObjType } from "./utils/pathParser";
@@ -31,17 +31,21 @@ export const Classificator = ({ onChange, className }: ClassificatorProps) => {
           }))
         }));
         setClassificator(resData);
-      });
+      })
+      .catch((e) => message.error({
+        content: `Ошибка ${e.message}`,
+        duration: 5
+      }))
   }, []);
 
   const onSelect = (selectedKeys: React.Key[], info: any) => {
     console.log('selected', selectedKeys, info);
-    
+
   };
 
   const onCheck = (checkedKeys: any, info: any) => {
     const paths: PathItemObjType[] = parsePath(checkedKeys.checked);
-    const classificator: ClassificatorType = paths?.map((brand) =>({
+    const classificator: ClassificatorType = paths?.map((brand) => ({
       id: "0",
       name: brand.text || '',
       series: brand.children?.map((series) => ({
@@ -56,7 +60,7 @@ export const Classificator = ({ onChange, className }: ClassificatorProps) => {
 
   return (
     <Tree
-    className={className}
+      className={className}
       checkable
       checkStrictly={true}
       selectable={false}
