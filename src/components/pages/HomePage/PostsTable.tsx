@@ -9,6 +9,7 @@ import { Breakpoint } from "antd/lib/_util/responsiveObserve";
 import useBreakpoint from "use-breakpoint";
 import { BREAKPOINTS } from "../../../constants";
 import { FileTextOutlined } from "@ant-design/icons";
+import { Carousel } from 'antd';
 
 const breakpointAntd: Breakpoint = 'lg';
 
@@ -21,6 +22,7 @@ type DataType = {
   href: string;
 }
 
+
 const DisplayDate = (date: any) => {
   const dateObj = new Date(date);
   const dateString = dateObj.toLocaleString('ru-RU');
@@ -30,10 +32,36 @@ const DisplayDate = (date: any) => {
 
 const hrefToPost = (href: string) => <a href={href} target="_blank" rel="noreferrer">Ссылка</a>;
 
+
+const hrefToPostImg = () => {
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+  return <>
+  <Button onClick={() => setIsModalVisible(!isModalVisible)}>
+  <FileTextOutlined />
+  Показать
+</Button>
+
+<Modal
+
+  title={false}
+  visible={isModalVisible}
+  footer={null}
+  bodyStyle ={{backgroundColor: "transparent"}}
+  onOk={() => setIsModalVisible(!isModalVisible)}
+  onCancel={() => setIsModalVisible(!isModalVisible)}
+>
+  
+<img  src='https://sun9-5.userapi.com/impf/HFjglWXShAc-or3yA4Ok6hhlF8S_zVOXHwtjjg/w65LgWk1rkE.jpg?size=200x267&quality=96&sign=7f04269313da04a86512c9a3c1832f58&type=album' alt="" />
+
+</Modal>
+</>
+} ;
+
 const textOfPost = (text: string) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const { breakpoint } = useBreakpoint(BREAKPOINTS, 'desktop');
-  const textFromHTML = ReactHtmlParser(text.replaceAll('a href="/', 'a target="_blank" rel="noreferrer" href="https://vk.com/').replaceAll('src="/', 'src="https://vk.com/'));
+  const textFromHTML = ReactHtmlParser(text);
   if (breakpoint !== 'mobile') {
     return <div className="textCeil">
       {
@@ -101,6 +129,13 @@ const columns = [
     dataIndex: 'href',
     key: 'href',
     render: hrefToPost
+  },
+  {
+    title: 'Фото',
+    dataIndex: 'href',
+    key: 'href',
+    render: hrefToPostImg
+
   },
   {
     title: 'Цена',
