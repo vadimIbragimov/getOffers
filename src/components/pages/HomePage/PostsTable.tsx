@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { Button, Collapse, Modal, Table } from "antd";
 import { ParsedGroupType } from "./types";
 import ReactHtmlParser from 'react-html-parser';
+import { Image } from 'antd';
+import { FileTextOutlined } from "@ant-design/icons";
 
 import './style/PostsTable.less';
 import CollapsePanel from "antd/lib/collapse/CollapsePanel";
 import { Breakpoint } from "antd/lib/_util/responsiveObserve";
 import useBreakpoint from "use-breakpoint";
 import { BREAKPOINTS } from "../../../constants";
-import { FileTextOutlined } from "@ant-design/icons";
 
 const breakpointAntd: Breakpoint = 'lg';
 
@@ -19,6 +20,7 @@ type DataType = {
   price: string;
   date: number;
   href: string;
+  hrefImg: string[];
 }
 
 const DisplayDate = (date: any) => {
@@ -29,6 +31,33 @@ const DisplayDate = (date: any) => {
 }
 
 const hrefToPost = (href: string) => <a href={href} target="_blank" rel="noreferrer">Ссылка</a>;
+
+
+const hrefToPostImg = (hrefImg: Array<string>) => {
+  console.log('[hrefToPostImg] : hrefImg', hrefImg);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  return <>
+    <Button onClick={() => setIsModalVisible(!isModalVisible)} disabled={!hrefImg || !hrefImg.length}>
+      <FileTextOutlined />
+      Показать
+    </Button>
+    <Modal
+      title={false}
+      visible={isModalVisible}
+      footer={null}
+      bodyStyle={{ backgroundColor: "transparent" }}
+      onOk={() => setIsModalVisible(!isModalVisible)}
+      onCancel={() => setIsModalVisible(!isModalVisible)}
+    >
+      {hrefImg?.map((href, index) => <Image key={index} width={200} src={href} />)}
+      {/* <Image
+        width={200}
+        src={hrefImg[0]}
+      /> */}
+    </Modal>
+  </>
+};
+
 
 const textOfPost = (text: string) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
@@ -103,6 +132,13 @@ const columns = [
     render: hrefToPost
   },
   {
+    title: 'Фото',
+    dataIndex: 'hrefImg',
+    key: 'hrefImg',
+    render: hrefToPostImg
+
+  },
+  {
     title: 'Цена',
     dataIndex: 'price',
     key: 'price',
@@ -132,6 +168,7 @@ export const PostsTable = ({ postsData, loading }: { postsData: ParsedGroupType[
         price: post.price.toString(),
         date: post.date,
         href: post.post,
+        hrefImg: post.imgPost || []
       });
     });
   });
@@ -150,3 +187,9 @@ export const PostsTable = ({ postsData, loading }: { postsData: ParsedGroupType[
     />
   );
 };
+
+
+
+
+
+

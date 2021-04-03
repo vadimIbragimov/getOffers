@@ -39,8 +39,8 @@ const Homepage = () => {
 			.then((data) => {
 				setLoading(false);
 				const resData: ParsedGroupType[] = data;
+				console.log('[onLoadDataClick]: resData',resData);
 				setPostsData(resData);
-				console.log(resData);
 			});
 	};
 

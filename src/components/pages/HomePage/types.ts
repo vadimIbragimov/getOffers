@@ -24,6 +24,7 @@ export type ParsedDataType = {
   date: number;
   price: string | number;
   post: string;
+  imgPost?: string[];
 };
 
 export type ParsedGroupType = {
