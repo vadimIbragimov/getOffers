@@ -9,7 +9,7 @@ import { Breakpoint } from "antd/lib/_util/responsiveObserve";
 import useBreakpoint from "use-breakpoint";
 import { BREAKPOINTS } from "../../../constants";
 import { FileTextOutlined } from "@ant-design/icons";
-import { Carousel } from 'antd';
+import { Image } from 'antd';
 
 const breakpointAntd: Breakpoint = 'lg';
 
@@ -20,6 +20,7 @@ type DataType = {
   price: string;
   date: number;
   href: string;
+  hrefImg: string[];
 }
 
 
@@ -33,30 +34,29 @@ const DisplayDate = (date: any) => {
 const hrefToPost = (href: string) => <a href={href} target="_blank" rel="noreferrer">Ссылка</a>;
 
 
-const hrefToPostImg = () => {
+const hrefToPostImg = (hrefImg: Array<string>) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-
   return <>
-  <Button onClick={() => setIsModalVisible(!isModalVisible)}>
-  <FileTextOutlined />
-  Показать
-</Button>
-
-<Modal
-
-  title={false}
-  visible={isModalVisible}
-  footer={null}
-  bodyStyle ={{backgroundColor: "transparent"}}
-  onOk={() => setIsModalVisible(!isModalVisible)}
-  onCancel={() => setIsModalVisible(!isModalVisible)}
->
-  
-<img  src='https://sun9-5.userapi.com/impf/HFjglWXShAc-or3yA4Ok6hhlF8S_zVOXHwtjjg/w65LgWk1rkE.jpg?size=200x267&quality=96&sign=7f04269313da04a86512c9a3c1832f58&type=album' alt="" />
-
-</Modal>
-</>
-} ;
+    <Button onClick={() => setIsModalVisible(!isModalVisible)}>
+      <FileTextOutlined />
+      Показать
+    </Button>
+    <Modal
+      title={false}
+      visible={isModalVisible}
+      footer={null}
+      bodyStyle={{ backgroundColor: "transparent" }}
+      onOk={() => setIsModalVisible(!isModalVisible)}
+      onCancel={() => setIsModalVisible(!isModalVisible)}
+    >
+      {hrefImg.map((href) => <Image width={200} src={href} />)}
+      {/* <Image
+        width={200}
+        src={hrefImg[0]}
+      /> */}
+    </Modal>
+  </>
+};
 
 const textOfPost = (text: string) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
@@ -167,6 +167,7 @@ export const PostsTable = ({ postsData, loading }: { postsData: ParsedGroupType[
         price: post.price.toString(),
         date: post.date,
         href: post.post,
+        hrefImg: post.imgPost
       });
     });
   });
