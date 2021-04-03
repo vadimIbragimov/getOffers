@@ -34,7 +34,7 @@ const hrefToPost = (href: string) => <a href={href} target="_blank" rel="norefer
 
 
 const hrefToPostImg = (hrefImg: Array<string>) => {
-  console.log('[hrefToPostImg] : hrefImg', hrefImg);
+  // console.log('[hrefToPostImg] : hrefImg', hrefImg);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   return <>
     <Button onClick={() => setIsModalVisible(!isModalVisible)} disabled={!hrefImg || !hrefImg.length}>
@@ -49,7 +49,14 @@ const hrefToPostImg = (hrefImg: Array<string>) => {
       onOk={() => setIsModalVisible(!isModalVisible)}
       onCancel={() => setIsModalVisible(!isModalVisible)}
     >
-      {hrefImg?.map((href, index) => <Image key={index} width={200} src={href} />)}
+      
+      {hrefImg?.map((href, index) => <Image style={{
+          maxWidth: '180px',
+          maxHeight: '180px',
+          minWidth: '100px',
+          minHeight: '100px',
+          margin: '3px'
+      }} key={index} width={180} height={180} src={href} />)}
       {/* <Image
         width={200}
         src={hrefImg[0]}
@@ -64,11 +71,11 @@ const textOfPost = (text: string) => {
   const { breakpoint } = useBreakpoint(BREAKPOINTS, 'desktop');
   const textFromHTML = ReactHtmlParser(text.replaceAll('a href="/', 'a target="_blank" rel="noreferrer" href="https://vk.com/').replaceAll('src="/', 'src="https://vk.com/'));
   if (breakpoint !== 'mobile') {
-    return <div className="textCeil">
+    return <div className="textCeil" style={{maxWidth: '600px'}}>
       {
         textFromHTML.toString().length > 80
-          ? <Collapse>
-            <CollapsePanel header={`${textFromHTML.toString().slice(0, 80)}`} key="1">
+          ? <Collapse >
+            <CollapsePanel header={`${textFromHTML.toString().slice(0, 80)}`} key="1" >
               <p>{textFromHTML}</p>
             </CollapsePanel>
           </Collapse>
@@ -168,7 +175,7 @@ export const PostsTable = ({ postsData, loading }: { postsData: ParsedGroupType[
         price: post.price.toString(),
         date: post.date,
         href: post.post,
-        hrefImg: post.imgPost || []
+        hrefImg: post.hrefImg || []
       });
     });
   });

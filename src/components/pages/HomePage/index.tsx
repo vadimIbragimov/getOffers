@@ -39,7 +39,7 @@ const Homepage = () => {
 			.then((data) => {
 				setLoading(false);
 				const resData: ParsedGroupType[] = data;
-				console.log('[onLoadDataClick]: resData',resData);
+				// console.log('[onLoadDataClick]: resData',resData);
 				setPostsData(resData);
 			});
 	};
@@ -48,7 +48,7 @@ const Homepage = () => {
 
 	return (
 		<div className="container">
-			{console.log('breakpoints', breakpoint)}
+			{/* {console.log('breakpoints', breakpoint)} */}
 			<Layout className="layout">
 				{
 					breakpoint !== 'mobile'

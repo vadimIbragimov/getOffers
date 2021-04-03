@@ -35,7 +35,7 @@ export const Classificator = ({ onChange, className }: ClassificatorProps) => {
   }, []);
 
   const onSelect = (selectedKeys: React.Key[], info: any) => {
-    console.log('selected', selectedKeys, info);
+    // console.log('selected', selectedKeys, info);
     
   };
 
