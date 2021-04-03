@@ -26,7 +26,7 @@ export const Groups = ({ onChange }: { onChange?: (groups: string[]) => void }) 
               
               <div className="group" >
                 {sourceGroup.name}
-                <a href={`https://vk.com/${sourceGroup.href}`}>
+                <a href={`https://vk.com/${sourceGroup.href}`} target="blank" rel="noreferrer">
                   <img src={sourceGroup.hrefImage} style={{ width: '30px', height: '30px', borderRadius: '50%', marginLeft: '10px' }} alt="" />
                 </a>
 
