@@ -39,7 +39,7 @@ const hrefToPostImg = (hrefImg: Array<string>) => {
   return <>
     <Button onClick={() => setIsModalVisible(!isModalVisible)} disabled={!hrefImg || !hrefImg.length}>
       <FileTextOutlined />
-      Показать
+      
     </Button>
     <Modal
       title={false}
@@ -86,7 +86,7 @@ const textOfPost = (text: string) => {
     return <>
       <Button onClick={() => setIsModalVisible(!isModalVisible)}>
         <FileTextOutlined />
-        Показать
+        
       </Button>
       <Modal
         title={false}
@@ -117,6 +117,7 @@ const columns = [
       // a должно быть равным b
       return 0;
     },
+
   },
   {
     title: 'Текст поста',
@@ -125,24 +126,29 @@ const columns = [
     render: textOfPost,
   },
   {
-    title: 'Дата публикации',
+    title: 'Дата',
     dataIndex: 'date',
     key: 'date',
     render: DisplayDate,
     // sorter: true,
     sorter: (a: any, b: any) => a.date - b.date,
+
   },
   {
     title: 'Ссылка на пост',
     dataIndex: 'href',
     key: 'href',
-    render: hrefToPost
+    render: hrefToPost,
+
   },
   {
     title: 'Фото',
     dataIndex: 'hrefImg',
     key: 'hrefImg',
-    render: hrefToPostImg
+    render: hrefToPostImg,
+    width: 50,
+    minWidth: 30
+
 
   },
   {
