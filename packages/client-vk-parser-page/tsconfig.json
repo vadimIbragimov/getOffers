@@ -1,0 +1,15 @@
+{
+  "extends": "../build/config/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "target": "es6",
+    "module": "commonjs",
+    "jsx": "react",
+    "declaration": true,
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  }
+}

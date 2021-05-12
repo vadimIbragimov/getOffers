@@ -1,0 +1,27 @@
+{
+  "name": "@go/packages-builder",
+  "version": "1.0.0",
+  "description": "This package for puild local packages",
+  "main": "./bin/index.js",
+  "bin": {
+    "go-package-build": "./bin/index.js"
+  },
+  "author": "ibragimov.v.r@ya.ru",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.14.0",
+    "autoprefixer": "^10.2.5",
+    "chalk": "^4.1.1",
+    "gulp": "^4.0.2",
+    "gulp-eslint": "^6.0.0",
+    "gulp-postcss": "^9.0.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "image-extensions": "^1.1.0",
+    "moment": "^2.29.1",
+    "path": "^0.12.7",
+    "postcss-less": "^4.0.1",
+    "postcss-scss": "^3.0.5",
+    "tailwindcss": "^2.1.2",
+    "yargs": "^17.0.0"
+  }
+}
