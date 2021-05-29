@@ -23,5 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 yarn.lock
 
-/lerna-debug.log
+lerna-debug.log
 log*.txt
