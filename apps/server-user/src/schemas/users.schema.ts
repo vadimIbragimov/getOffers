@@ -17,6 +17,9 @@ export class User {
   @Prop()
   emailConfirmationToken: string;
 
+  @Prop()
+  passwordRestoreToken: string;
+
   @Prop(
     raw({
       tokenValue: { type: String },

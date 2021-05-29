@@ -5,8 +5,11 @@ import { randomBytes } from 'crypto';
 import { Model } from 'mongoose';
 import { authTokenExpiration, mainURI } from 'src/constants';
 import { LoginDto } from 'src/dto/lohin.dto';
+import { GetRestoreTokenDto } from 'src/dto/get-restore-token.controller.dto';
 import { RegisterDto } from '../dto/register.dto';
 import { User, UserDocument } from '../schemas/users.schema';
+import { RestoreDto } from 'src/dto/restore.dto';
+import { ChangePasswordDto } from 'src/dto/change-password.dto';
 
 @Injectable()
 export class UserService {
@@ -78,10 +81,74 @@ export class UserService {
   }
 
   async confirmEmail(token: string) {
-    await this.userModel.findOneAndUpdate(
-      { emailConfirmationToken: token },
-      { emailConfirmationToken: undefined },
+    const user = await this.userModel
+      .findOneAndUpdate(
+        { emailConfirmationToken: token },
+        { emailConfirmationToken: undefined },
+      )
+      .exec();
+    if (user) {
+      return { success: true };
+    } else {
+      throw new HttpException(
+        'Ссылка подтверждения недействительна',
+        HttpStatus.FORBIDDEN,
+      );
+    }
+  }
+
+  async getRestoreToken(email: GetRestoreTokenDto['email']) {
+    const passwordRestoreToken = randomBytes(46).toString('hex');
+    const user = await this.userModel
+      .findOneAndUpdate(
+        { email },
+        { passwordRestoreToken: passwordRestoreToken },
+      )
+      .exec();
+    if (user) {
+      await this.mailerService.sendMail({
+        to: email,
+        from: process.env.EMAIL_ID,
+        subject: 'Восстановление пароля',
+        template: './restore',
+        context: {
+          url: `${mainURI}restore/${passwordRestoreToken}`,
+        },
+      });
+      return { success: true };
+    } else {
+      throw new HttpException('Пользователь не найден', HttpStatus.FORBIDDEN);
+    }
+  }
+
+  async restore({ passwordRestoreToken, newPassword }: RestoreDto) {
+    const user = await this.userModel.findOneAndUpdate(
+      { passwordRestoreToken },
+      { password: newPassword, passwordRestoreToken: undefined },
     );
-    return { success: true };
+    if (user) {
+      return { success: true };
+    } else {
+      throw new HttpException(
+        'Ссылка восстановления недействительна',
+        HttpStatus.FORBIDDEN,
+      );
+    }
+  }
+
+  async changePassword({ email, oldPassword, newPassword }: ChangePasswordDto) {
+    const user = await this.userModel.findOne({ email }).exec();
+    if (user) {
+      if (user.password === oldPassword) {
+        await this.userModel
+          .findOneAndUpdate({ email }, { password: newPassword })
+          .exec();
+        return { success: true };
+      } else {
+        throw new HttpException('Неверный пароль', HttpStatus.FORBIDDEN);
+      }
+    } else {
+      throw new HttpException('Пользователь не найден', HttpStatus.FORBIDDEN);
+    }
   }
 }
