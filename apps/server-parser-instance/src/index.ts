@@ -53,7 +53,7 @@ const subscribe = async () => {
 	};
 
 	while (freeStreams && tryCount) {
-		try {
+		try { 
 			await addTask()
 			freeStreams--;
 		} catch (e) {
