@@ -5,7 +5,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { LoginDto } from 'src/dto/lohin.dto';
+import { LoginDto } from './dto/lohin.dto';
 import { UserService } from './user.service';
 
 @Controller('login')

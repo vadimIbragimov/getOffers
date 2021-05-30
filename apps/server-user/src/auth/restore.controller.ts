@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { RestoreDto } from 'src/dto/restore.dto';
+import { RestoreDto } from './dto/restore.dto';
 import { UserService } from './user.service';
 
 @Controller('restore')

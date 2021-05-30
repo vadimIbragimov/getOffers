@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ChangePasswordDto } from 'src/dto/change-password.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 import { UserService } from './user.service';
 
 @Controller('change-password')

@@ -3,13 +3,13 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { randomBytes } from 'crypto';
 import { Model } from 'mongoose';
-import { authTokenExpiration, mainURI } from 'src/constants';
-import { LoginDto } from 'src/dto/lohin.dto';
-import { GetRestoreTokenDto } from 'src/dto/get-restore-token.controller.dto';
-import { RegisterDto } from '../dto/register.dto';
+import { authTokenExpiration, mainURI } from '../constants';
+import { LoginDto } from './dto/lohin.dto';
+import { GetRestoreTokenDto } from './dto/get-restore-token.controller.dto';
+import { RegisterDto } from './dto/register.dto';
 import { User, UserDocument } from '../schemas/users.schema';
-import { RestoreDto } from 'src/dto/restore.dto';
-import { ChangePasswordDto } from 'src/dto/change-password.dto';
+import { RestoreDto } from './dto/restore.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @Injectable()
 export class UserService {

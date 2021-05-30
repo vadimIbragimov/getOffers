@@ -9,7 +9,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { UserService } from 'src/auth/user.service';
-import { RegisterDto } from '../dto/register.dto';
+import { RegisterDto } from './dto/register.dto';
 
 @Controller('register')
 export class RegisterController {

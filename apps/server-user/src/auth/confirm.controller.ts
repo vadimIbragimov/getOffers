@@ -5,7 +5,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { ConfirmDto } from 'src/dto/confirm.dto';
+import { ConfirmDto } from './dto/confirm.dto';
 import { UserService } from './user.service';
 
 @Controller('confirm')
